@@ -49,17 +49,16 @@ lmls_bspline <- function(
 ) {
 
   # Start with initialization
-  init_result <- init(vector_x, response_vector_y)
+  init_result <- init(vector_x, response_vector_y, knot_count, poly_degree,
+                      lambda_mu, lambda_sigma, order_difference_matrix_r)
   mu_hat <- init_result$mu_hat
   sigma_hat <- init_result$sigma_hat
   beta_hat <- init_result$beta_hat
   gamma_hat <- init_result$gamma_hat
   design_matrix_Z <- init_result$design_matrix_Z
+  penalty_matrix_K <- init_result$penalty_matrix_K
 
-  penalty_matrix_K <- create_penalty_matrix_K(
-    order_difference_matrix_r, poly_degree, knot_count
-  )
-
+  # Return rs algo outcome
   return(
     outer(
       mu_hat, sigma_hat, design_matrix_Z, vector_x, response_vector_y,
