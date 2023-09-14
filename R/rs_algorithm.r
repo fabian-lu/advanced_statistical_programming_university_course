@@ -12,8 +12,8 @@
 #' @param response_vector_y The response vector of y values.
 #' @param knot_count The number of knots to use in the B-spline basis.
 #' @param poly_degree The degree of the B-spline polynomials.
-#' @param hyperparameter_lambda_mu sadfsdf
-#' @param hyperparameter_lambda_sigma asdff
+#' @param hyperparameter_lambda_mu The mean of the hyperparameter lamda.
+#' @param hyperparameter_lambda_sigma The variance of the hyperparameter lambda.
 #' @param order_difference_matrix_r The order of the difference matrix used for penalty.
 #'
 #' @return A list containing the initial values of mu_hat, sigma_hat, beta_hat, gamma_hat, and the design matrix Z.
@@ -78,11 +78,11 @@ global_deviance <- function(response_vector_y, mu_hat, sigma_hat) {
 #' @param lambda_mu_flag A flag indicating whether lambda is for mu or sigma estimation.
 #' @param design_matrix_Z The B-spline design matrix.
 #' @param W The weight matrix.
-#' @param w sdddddddddddd
-#' @param z sadfsdf
+#' @param w A vector containing weights.
+#' @param z A vector of values.
 #' @param K The penalty matrix.
-#' @param lambda_acc asdfsdf
-#' @param n asdfdfd
+#' @param lambda_acc The tuning parameter for the optimization method.
+#' @param n The number of observations.
 #'
 #' @return The optimal value of lambda for GCV.
 compute_lambda_gcv <- function(lambda_mu_flag, design_matrix_Z, W, w, z, K, lambda_acc, n) {
@@ -130,7 +130,7 @@ compute_lambda_gcv <- function(lambda_mu_flag, design_matrix_Z, W, w, z, K, lamb
 #' @param beta_hat The current estimate of the B-spline coefficients.
 #' @param lambda_mu The tuning parameter (lambda) for updating the mean parameter.
 #' @param K_mu The penalty matrix for the mean parameter.
-#' @param lambda_acc ddddddddddddddd
+#' @param lambda_acc The tuning parameter for the optimization method.
 #'
 #' @return A list containing the updated mean parameter (mu_hat), updated B-spline coefficients (beta_hat),
 #' and the optimal lambda_mu value.
@@ -186,7 +186,7 @@ inner_mu <- function(
 #' @param gamma_hat The current estimate of the gamma coefficients for variance.
 #' @param lambda_sigma The tuning parameter (lambda) for updating the variance parameter.
 #' @param K_sigma The penalty matrix for the variance parameter.
-#' @param lambda_acc ddddddddddddddd
+#' @param lambda_acc The tuning parameter for the optimization method.
 #'
 #' @return A list containing the updated variance parameter (sigma_hat), updated gamma coefficients (gamma_hat),
 #' and the optimal lambda_sigma value.

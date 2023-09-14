@@ -1,0 +1,84 @@
+library(testthat)
+library(pSplineLocationScale)
+library(ggplot2)
+
+
+test_that("Testing generate_polynomial_data", {
+  n <- 100
+  degree <- 3
+  noise_sd <- 0.4
+  lower_boundary <- -5
+  upper_boundary <- 5
+  
+  data <- generate_polynomial_data(n, degree, noise_sd, lower_boundary, upper_boundary)
+  
+  # Check if the data has the correct number of observations
+  expect_equal(nrow(data), n)
+  
+    ggplot(data, aes(x, y)) +
+    geom_point() +
+    ggtitle("Generated Polynomial Data")
+})
+
+
+
+test_that("Testing generate_fan_shaped_data", {
+  n <- 100
+  
+  data <- generate_fan_shaped_data(n)
+  
+  # Check if the data has the correct number of observations
+  expect_equal(nrow(data), n)
+  
+  
+  ggplot(data, aes(x, y)) +
+    geom_point() +
+    ggtitle("Generated Fan-Shaped Data")
+})
+
+
+test_that("Test generate_polynomial_data_with_changing_sd_oscilating", {
+  n <- 100
+  degree <- 3
+  noise_sd_min <- 0.1
+  noise_sd_max <- 0.6
+  lower_boundary <- -5
+  upper_boundary <- 5
+  
+  data <- generate_polynomial_data_with_changing_sd_oscilating(
+    n, degree, noise_sd_min, noise_sd_max, lower_boundary, upper_boundary
+  )
+  
+  # Check if the data has the correct number of observations
+  expect_equal(nrow(data), n)
+  
+  ggplot(data, aes(x = x, y = y)) +
+    geom_point(shape = 16) +
+    labs(title = "Generated Data with Oscillating Noise SD", x = "X", y = "Y")
+})
+
+
+test_that("Test generate_polynomial_data_with_changing_sd_linearly", {
+  n <- 100
+  degree <- 3
+  noise_sd_min <- 0.1
+  noise_sd_max <- 1
+  lower_boundary <- -5
+  upper_boundary <- 5
+  
+  data <- generate_polynomial_data_with_changing_sd_linearly(
+    n, degree, noise_sd_min, noise_sd_max, lower_boundary, upper_boundary
+  )
+  
+  # Check if the data has the correct number of observations
+  expect_equal(nrow(data), n)
+
+  ggplot(data, aes(x = x, y = y)) +
+    geom_point(shape = 16) +
+    labs(title = "Generated Data with Linearly Changing Noise SD", x = "X", y = "Y")
+})
+
+
+# Run the tests
+# test_results <- test_file("path_to_test_file.R")  # Replace with the path to your test file
+

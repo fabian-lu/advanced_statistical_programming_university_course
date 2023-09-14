@@ -11,7 +11,8 @@ inner_sigma(
   response_vector_y,
   gamma_hat,
   lambda_sigma,
-  K_sigma
+  K_sigma,
+  lambda_acc
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ inner_sigma(
 \item{lambda_sigma}{The tuning parameter (lambda) for updating the variance parameter.}
 
 \item{K_sigma}{The penalty matrix for the variance parameter.}
+
+\item{lambda_acc}{The tuning parameter for the optimization method.}
 }
 \value{
 A list containing the updated variance parameter (sigma_hat), updated gamma coefficients (gamma_hat),

@@ -1,5 +1,5 @@
 Package: pSplineLocationScale
-Title: What the Package Does (One Line, Title Case)
+Title: Estimation of non-linear covariate effects with p-splines
 Version: 0.0.0.9000
 Authors@R: 
   c(person(given = "Fabian",
@@ -14,8 +14,19 @@ Authors@R:
            family = "Litwinov",
            role = c("aut"),
            email = "alexander.litwinov@uni-goettingen.de"))
-Maintainer: Fabian Lukassen <fabian.lukassen@uni-goettingen.de>
-Description: P-Splines + optimisation algorithm for location scale regression
-License: MIT
+Description: P-Splines and optimization algorithms for location-scale regression. This package provides tools for fitting local maximum likelihood regression models using B-splines, along with optimization algorithms for estimating location and scale parameters.
+License: MIT + file LICENSE
+URL: https://gitlab.gwdg.de/fabian.lukassen/psplinelocationscale
+Depends: R (>= 3.5.0)
+Imports: ggplot2
+Suggests:
+    lmls,
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+VignetteBuilder: knitr
+Config/testthat/edition: 3
