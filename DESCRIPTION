@@ -1,0 +1,21 @@
+Package: pSplineLocationScale
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+  c(person(given = "Fabian",
+           family = "Lukassen",
+           role = c("aut", "cre"),
+           email = "fabian.lukassen@uni-goettingen.de"),
+  person(given = "Wendi",
+           family = "Qu",
+           role = c("aut"),
+           email = "wendi.qu@uni-goettingen.de"),
+  person(given = "Alexander",
+           family = "Litwinov",
+           role = c("aut"),
+           email = "alexander.litwinov@uni-goettingen.de"))
+Maintainer: Fabian Lukassen <fabian.lukassen@uni-goettingen.de>
+Description: P-Splines + optimisation algorithm for location scale regression
+License: MIT
+Encoding: UTF-8
+RoxygenNote: 7.2.3
