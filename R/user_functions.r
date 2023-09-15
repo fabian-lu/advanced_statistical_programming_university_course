@@ -1,3 +1,20 @@
+
+# Define class 'pSplineLocationScale'
+setClass(
+  "pSplineLocationScale",
+  representation(
+    mu_hat = "matrix",
+    sigma_hat = "matrix",
+    beta_hat = "matrix",
+    gamma_hat = "matrix",
+    opt_method = "character",
+    lambda_mu = "numeric",
+    lambda_sigma = "numeric",
+    GD_conv = "numeric",
+    poly_degree = "numeric"
+  )
+)
+
 #' Fits a Local Maximum Likelihood (LML) regression model using B-splines
 #'
 #' This function fits a Local Maximum Likelihood (LML) regression model to the given data using B-splines.
@@ -42,58 +59,57 @@
 #'
 #' @export
 #'
-
 lmls_bspline <- function(
-    vector_x, response_vector_y, kFnot_count = 40, poly_degree = 3,
+    vector_x, response_vector_y, knot_count = 40, poly_degree = 3,
     order_difference_matrix_r = 2, max_iterations = 50, lambda_mu = 3, lambda_sigma = 500,
     opt_method = "GCV", lambda_acc = 50
 ) {
   
   # Check input for vector_x
-  if (class(vector_x) != "numeric") {
+  if (!is.numeric(vector_x)) {
     stop("Input Argument for 'vector_x' must be numeric")
   }
   
   # Check input for response_vector_y
-  if (class(response_vector_y) != "numeric") {
+  if (!is.numeric(response_vector_y)) {
     stop("Input Argument for 'response_vector_y' must be numeric")
   }
   
   # Check input for knot_count
-  if (class(knot_count) != "numeric") {
+  if (!is.numeric(knot_count)) {
     stop("Input Argument for 'knot_count' must be numeric")
   }
   
   # Check input for poly_degree
-  if (class(poly_degree) != "numeric") {
+  if (!is.numeric(poly_degree)) {
     stop("Input Argument for 'poly_degree' must be numeric")
   }
   
   # Check input for order_difference_matrix_r
-  if (class(order_difference_matrix_r) != "numeric") {
+  if (!is.numeric(order_difference_matrix_r)) {
     stop("Input Argument for 'order_difference_matrix_r' must be numeric")
   }
   
   # Check input for max_iterations
-  if (class(max_iterations) != "numeric") {
+  if (!is.numeric(max_iterations)) {
     stop("Input Argument for 'max_iterations' must be numeric")
   }
   
   # Check input for lambda_mu
-  if (class(lambda_mu) != "numeric") {
+  if (!is.numeric(lambda_mu)) {
     stop("Input Argument for 'lambda_mu' must be numeric")
   }
   
   # Check input for lambda_sigma
-  if (class(lambda_sigma) != "numeric") {
+  if (!is.numeric(lambda_sigma)) {
     stop("Input Argument for 'lambda_sigma' must be numeric")
   }
   
   # Check input for lambda_acc
-  if (class(lambda_acc) != "numeric") {
+  if (!is.numeric(lambda_acc)) {
     stop("Input Argument for 'lambda_acc' must be numeric")
   }
-
+  
   # Start with initialization
   init_result <- init(vector_x, response_vector_y, knot_count, poly_degree,
                       lambda_mu, lambda_sigma, order_difference_matrix_r)
@@ -103,23 +119,35 @@ lmls_bspline <- function(
   gamma_hat <- init_result$gamma_hat
   design_matrix_Z <- init_result$design_matrix_Z
   penalty_matrix_K <- init_result$penalty_matrix_K
-
-  # Return rs algo outcome
-  return(
-    outer(
-      mu_hat, sigma_hat, design_matrix_Z, vector_x, response_vector_y,
-      beta_hat, gamma_hat, lambda_mu, lambda_sigma, max_iterations, penalty_matrix_K,
-      penalty_matrix_K, knot_count, poly_degree, opt_method, lambda_acc
-    )
+  
+  # RS ALgorithm
+  outer_result <- outer(
+    mu_hat, sigma_hat, design_matrix_Z, vector_x, response_vector_y,
+    beta_hat, gamma_hat, lambda_mu, lambda_sigma, max_iterations, penalty_matrix_K,
+    penalty_matrix_K, knot_count, poly_degree, opt_method, lambda_acc
   )
+  
+  outer_result$poly_degree <- poly_degree
+  outer_result$order_difference_matrix_r <- order_difference_matrix_r
+  outer_result$max_iterations <- max_iterations
+  outer_result$lambda_mu <- lambda_mu
+  outer_result$lambda_sigma <- lambda_sigma
+  outer_result$opt_method <- opt_method
+  outer_result$lambda_acc <- lambda_acc
+  
+  
+  class(outer_result) <- "pSplineLocationScale"
+  
+  return(outer_result)
 }
+
 
 #' Plotting function for lmls_bspline results using ggplot2
 #'
 #' This function plots the estimated mean function along with confidence intervals
 #' for the lmls_bspline results using ggplot2.
 #'
-#' @param result An object of class "lmls_bspline" containing the result of the lmls_bspline function.
+#' @param result An object of class "pSplineLocationScale" containing the result of the lmls_bspline function.
 #' @param data The original data used in the lmls_bspline function.
 #'
 #' @return A ggplot2 object.
@@ -167,7 +195,7 @@ plot_lmls_bspline <- function(result, data) {
 #'
 #' This function provides a summary of the results obtained from the lmls_bspline function.
 #'
-#' @param lmls_object An object of class "lmls_bspline" obtained from lmls_bspline function.
+#' @param lmls_object An object of class "pSplineLocationScale" obtained from lmls_bspline function.
 #' @param digits Number of digits to round numerical values in the summary.
 #'
 #' @return A summary of the lmls_bspline object.
@@ -177,38 +205,80 @@ plot_lmls_bspline <- function(result, data) {
 #' data <- generate_polynomial_data(100, 3, 0.4, -5, 5)
 #' result <- lmls_bspline(data$x, data$y)
 #' summary_lmls_bspline(result)
-summary_lmls_bspline <- function(lmls_object, digits = 3) {
-  if (class(lmls_object) != "list" || !all(names(lmls_object) %in% c("mu_hat", "sigma_hat", "beta_hat", "gamma_hat"))) {
-    stop("lmls_object should be a list with components 'mu_hat', 'sigma_hat', 'beta_hat', and 'gamma_hat'")
+summary_lmls_bspline <- function(lmls_object, digits = 3){
+  
+  if (!all(names(lmls_object) %in% c("mu_hat", "sigma_hat", "beta_hat", "gamma_hat",
+                                     "poly_degree", "order_difference_matrix_r",
+                                     "max_iterations", "lambda_mu", "lambda_sigma", "opt_method", "lambda_acc"))) {
+    stop("lmls_object should be a list with the required components")}
+
+  
+  cat("\nCall:\n")
+  cat(paste("lmls_bspline(formula = y ~ x)", sep = "\n", collapse = "\n"))
+  cat("\n")
+  
+  if (!is.null(lmls_object$opt_method)) {
+    cat("\nMethod used for Optimization:\n")
+    if (lmls_object$opt_method == "GCV") {
+      cat("Generalized Cross Validation\n")
+    } else if (lmls_object$opt_method == "AIC") {
+      cat("Generalized Akaike information criterion\n")
+    }
   }
   
-  cat("Local Maximum Likelihood (LML) Regression Summary\n")
-  cat("------------------------------------------------\n")
+  cat("\n")
   
-  cat("\nOptimization Method: ", lmls_object$opt_method, "\n")
+  if (!is.null(lmls_object$lambda_mu)) {
+    cat("Optimal Lambda for Mu:\n")
+    cat(format(signif(lmls_object$lambda_mu, digits)), "\n")
+  }
   
-  cat("\nOptimal Lambda for Mu: ", format(signif(lmls_object$lambda_mu, digits)), "\n")
+  cat("\n")
   
-  cat("\nOptimal Lambda for Sigma: ", format(signif(lmls_object$lambda_sigma, digits)), "\n")
+  if (!is.null(lmls_object$lambda_sigma)) {
+    cat("Optimal Lambda for Sigma:\n")
+    cat(format(signif(lmls_object$lambda_sigma, digits)), "\n")
+  }
   
-  cat("\nNumber of Knots: ", length(lmls_object$beta_hat) - 2, "\n")
+  cat("\n")
   
-  cat("\nDegree of B-spline Polynomials: ", lmls_object$poly_degree, "\n")
+  if (!is.null(lmls_object$beta_hat)) {
+    cat("Number of Knots:\n")
+    cat(length(lmls_object$beta_hat) - 2, "\n")
+    cat("Estimated B-spline Coefficients:\n")
+    print(matrix(lmls_object$beta_hat, nrow = 1), digits = digits)
+  }
   
-  cat("\nGlobal Deviance at Convergence: ", format(signif(lmls_object$GD_conv, digits)), "\n")
+  cat("\n")
+  
+  if (!is.null(lmls_object$poly_degree)) {
+    cat("Degree of B-spline Polynomials:\n")
+    cat(lmls_object$poly_degree, "\n")
+  }
+  
+  cat("\n")
+  
+  if (!is.null(lmls_object$GD_conv)) {
+    cat("Global Deviance at Convergence:\n")
+    cat(format(signif(lmls_object$GD_conv, digits)), "\n")
+  }
   
   cat("\nEstimated Parameters:\n")
-  cat("Estimated Mean (mu_hat):\n")
-  print(lmls_object$mu_hat, digits = digits)
   
-  cat("\nEstimated Variance (sigma_hat):\n")
-  print(lmls_object$sigma_hat, digits = digits)
+  if (!is.null(lmls_object$mu_hat)) {
+    cat("Estimated Mean (mu_hat):\n")
+    print(matrix(lmls_object$mu_hat, nrow = 1), digits = digits)
+  }
   
-  cat("\nEstimated B-spline Coefficients (beta_hat):\n")
-  print(lmls_object$beta_hat, digits = digits)
+  if (!is.null(lmls_object$sigma_hat)) {
+    cat("\nEstimated Variance (sigma_hat):\n")
+    print(matrix(lmls_object$sigma_hat, nrow = 1), digits = digits)
+  }
   
-  cat("\nEstimated Gamma Coefficients for Variance (gamma_hat):\n")
-  print(lmls_object$gamma_hat, digits = digits)
+  if (!is.null(lmls_object$gamma_hat)) {
+    cat("\nEstimated Gamma Coefficients for Variance (gamma_hat):\n")
+    print(matrix(lmls_object$gamma_hat, nrow = 1), digits = digits)
+  }
 }
 
-
+  

@@ -22,6 +22,8 @@ lmls_bspline(
 
 \item{response_vector_y}{A vector of response values.}
 
+\item{knot_count}{The number of knots to use in the B-spline basis.}
+
 \item{poly_degree}{The degree of the B-spline polynomials.}
 
 \item{order_difference_matrix_r}{The order of the difference matrix used for penalty.}
@@ -35,8 +37,6 @@ lmls_bspline(
 \item{opt_method}{The optimization method to use for tuning parameter selection ('GCV' or 'GAIC').}
 
 \item{lambda_acc}{The tuning parameter for the optimization method.}
-
-\item{knot_count}{The number of knots to use in the B-spline basis.}
 }
 \value{
 A list containing the estimated mean (mu_hat), estimated variance (sigma_hat),

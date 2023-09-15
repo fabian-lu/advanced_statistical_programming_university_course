@@ -7,7 +7,7 @@
 plot_lmls_bspline(result, data)
 }
 \arguments{
-\item{result}{An object of class "lmls_bspline" containing the result of the lmls_bspline function.}
+\item{result}{An object of class "pSplineLocationScale" containing the result of the lmls_bspline function.}
 
 \item{data}{The original data used in the lmls_bspline function.}
 }
