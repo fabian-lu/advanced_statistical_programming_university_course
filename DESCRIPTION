@@ -18,15 +18,15 @@ Description: P-Splines and optimization algorithms for location-scale regression
 License: MIT + file LICENSE
 URL: https://gitlab.gwdg.de/fabian.lukassen/psplinelocationscale
 Depends: R (>= 3.5.0)
-Imports: ggplot2
-Suggests:
-    lmls,
-    knitr,
-    rmarkdown,
-    testthat (>= 3.0.0)
+Suggests: lmls, knitr, rmarkdown, testthat (>= 3.0.0)
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+NeedsCompilation: no
+Packaged: 2023-09-15 00:46:41 UTC; r1878138
+Author: Fabian Lukassen [aut, cre],
+  Wendi Qu [aut],
+  Alexander Litwinov [aut]
+Maintainer: Fabian Lukassen <fabian.lukassen@uni-goettingen.de>
