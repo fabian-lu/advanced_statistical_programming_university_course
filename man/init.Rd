@@ -4,12 +4,30 @@
 \alias{init}
 \title{Initialize Starting Values}
 \usage{
-init(vector_x, response_vector_y)
+init(
+  vector_x,
+  response_vector_y,
+  knot_count,
+  poly_degree,
+  hyperparameter_lambda_mu,
+  hyperparameter_lambda_sigma,
+  order_difference_matrix_r
+)
 }
 \arguments{
 \item{vector_x}{The input vector of x values.}
 
 \item{response_vector_y}{The response vector of y values.}
+
+\item{knot_count}{The number of knots to use in the B-spline basis.}
+
+\item{poly_degree}{The degree of the B-spline polynomials.}
+
+\item{hyperparameter_lambda_mu}{The mean of the hyperparameter lamda.}
+
+\item{hyperparameter_lambda_sigma}{The variance of the hyperparameter lambda.}
+
+\item{order_difference_matrix_r}{The order of the difference matrix used for penalty.}
 }
 \value{
 A list containing the initial values of mu_hat, sigma_hat, beta_hat, gamma_hat, and the design matrix Z.

@@ -2,21 +2,21 @@
 % Please edit documentation in R/user_functions.r
 \name{plot_lmls_bspline}
 \alias{plot_lmls_bspline}
-\title{Plotting function for lmls_bspline results}
+\title{Plotting function for lmls_bspline results using ggplot2}
 \usage{
 plot_lmls_bspline(result, data)
 }
 \arguments{
-\item{result}{An object of class "lmls_bspline" containing the result of the lmls_bspline function.}
+\item{result}{An object of class "pSplineLocationScale" containing the result of the lmls_bspline function.}
 
 \item{data}{The original data used in the lmls_bspline function.}
 }
 \value{
-None
+A ggplot2 object.
 }
 \description{
 This function plots the estimated mean function along with confidence intervals
-for the lmls_bspline results.
+for the lmls_bspline results using ggplot2.
 }
 \examples{
 data <- generate_polynomial_data(100, 3, 0.4, -5, 5)

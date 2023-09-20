@@ -11,7 +11,8 @@ inner_mu(
   design_matrix_Z,
   beta_hat,
   lambda_mu,
-  K_mu
+  K_mu,
+  lambda_acc
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ inner_mu(
 \item{lambda_mu}{The tuning parameter (lambda) for updating the mean parameter.}
 
 \item{K_mu}{The penalty matrix for the mean parameter.}
+
+\item{lambda_acc}{The tuning parameter for the optimization method.}
 }
 \value{
 A list containing the updated mean parameter (mu_hat), updated B-spline coefficients (beta_hat),

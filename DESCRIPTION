@@ -1,5 +1,5 @@
 Package: pSplineLocationScale
-Title: What the Package Does (One Line, Title Case)
+Title: Frequentist Estimation of Non-Linear Covariate Effects with p-Splines
 Version: 0.0.0.9000
 Authors@R: 
   c(person(given = "Fabian",
@@ -14,8 +14,16 @@ Authors@R:
            family = "Litwinov",
            role = c("aut"),
            email = "alexander.litwinov@uni-goettingen.de"))
-Maintainer: Fabian Lukassen <fabian.lukassen@uni-goettingen.de>
-Description: P-Splines + optimisation algorithm for location scale regression
-License: MIT
+Author: Fabian Lukassen [aut, cre],
+ Wendi Qu[aut],
+ Alexander Litwinov[aut]
+Description: P-Splines and optimization algorithms for location-scale regression. This package provides tools for fitting local maximum likelihood regression models using B-splines, along with optimization algorithms for estimating location and scale parameters.
+License: MIT + file LICENSE
+Imports: 
+    ggplot2,
+    methods
 Encoding: UTF-8
 RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
