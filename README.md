@@ -1,16 +1,12 @@
 # pSplineLocationScale
 
-> **University Project**: This R package was developed as a term paper for the course "Advanced Statistical Programming with R" (M.WIWI-QMW.0011) at the University of Göttingen, September 2023.
+> **University Project**: This R package was developed as a term paper for the course "Advanced Statistical Programming with R" at the University of Göttingen, September 2023.
 
 An implementation of penalized B-splines (p-Splines) for location-scale regression using the RS-algorithm for parameter estimation.
 
 ## About This Project
 
 This package implements frequentist estimation of non-linear covariate effects using p-Splines in a Gaussian location-scale regression framework. Unlike standard linear models where mean and variance are constant, location-scale models allow both the mean (location) and variance (scale) to vary across the data domain.
-
-**Authors**: Alexander Litwinov, Fabian Lukassen, Wendi Qu
-**Supervisor**: Quentin Seifert
-**Institution**: Georg-August-Universität Göttingen
 
 ## Project Structure
 
@@ -37,7 +33,7 @@ This package implements frequentist estimation of non-linear covariate effects u
 
 - **`tests/testthat/`**: Unit tests for all major functions
 
-- **`asp23pSpline.pdf`**: Complete term paper with theoretical background and simulation study
+- **`asp23pSpline.pdf`**: Term paper with theoretical background and simulation study
 
 ## What Worked
 
@@ -116,17 +112,6 @@ For full theoretical details, see `asp23pSpline.pdf`.
 - Automatic lambda selection via GCV or GAIC
 - Convergence checking with maximum iteration limits
 - Comprehensive error handling
-
-## Dependencies
-
-- R (>= 3.5.0)
-- ggplot2 (for plotting)
-- methods (for S4 classes)
-- testthat (>= 3.0.0) for testing
-
-## License
-
-MIT License
 
 ---
 
